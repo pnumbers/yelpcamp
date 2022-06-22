@@ -21,21 +21,27 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 200; i++) {
         const rand1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;
         const location = `${cities[rand1000].city}, ${cities[rand1000].state}`
-
-        const geoData = await geocoder.forwardGeocode({
-            query: location,
-            limit: 1
-        }).send()
-        geometry = geoData.body.features[0].geometry;
+        // Code to seed database by geocoding the random location -> Not required since seed cities have long. and lat.
+        // const geoData = await geocoder.forwardGeocode({
+        //     query: location,
+        //     limit: 1
+        // }).send()
+        // geometry = geoData.body.features[0].geometry;
         const camp = new Campground({
             author: '629d486b39b00c40db9274d7',
             // location: `${cities[rand1000].city}, ${cities[rand1000].state}`,
             location: location,
-            geometry: geometry,
+            // geometry: geometry,
+            geometry: {
+                type: 'Point',
+                coordinates: [
+                    cities[rand1000].longitude,
+                    cities[rand1000].latitude]
+            },
             title: `${sample(descriptors)} ${sample(places)}`,
             images: [{
                 url: 'https://res.cloudinary.com/dy0loatah/image/upload/v1655578474/YelpCamp/mdfc0j0jnk9wbnwrjvtl.jpg',
