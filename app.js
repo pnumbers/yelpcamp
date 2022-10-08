@@ -34,7 +34,10 @@ const { date } = require('joi');
 
 
 // Mongoose Connection Initialization
-mongoose.connect('mongodb://localhost:27017/yelp-camp');
+const dbUrl = process.env.DB_URL;
+// mongoose.connect('mongodb://localhost:27017/yelp-camp');
+mongoose.connect(dbUrl);
+
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -136,7 +139,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-    console.log(req.query)
+    // console.log(req.query)
     res.locals.currentUser = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
@@ -144,11 +147,11 @@ app.use((req, res, next) => {
 })
 
 
-app.get('/fakeuser', async (req, res) => {
-    const user = new User({ email: 'colt@gmail.com', username: 'colt' })
-    const newUser = await User.register(user, 'chicken');
-    res.send(newUser)
-})
+// app.get('/fakeuser', async (req, res) => {
+//     const user = new User({ email: 'colt@gmail.com', username: 'colt' })
+//     const newUser = await User.register(user, 'chicken');
+//     res.send(newUser)
+// })
 
 
 // Routers
