@@ -35,8 +35,10 @@ const { date } = require('joi');
 
 
 // Mongoose Connection Initialization
+// Cloud Database
 const dbUrl = process.env.DB_URL;
-// mongoose.connect('mongodb://localhost:27017/yelp-camp');
+// Local Dev Database
+// const dbUrl = 'mongodb://localhost:27017/yelp-camp';
 mongoose.connect(dbUrl);
 
 
