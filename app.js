@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -62,6 +63,7 @@ app.use(mongoSanitize());
 const sessionConfig = {
     name: 'session',
     secret: 'thisshouldbeabettersecret',
+    store: MongoStore.create({ mongoUrl: dbUrl }),
     resave: false,
     saveUninitialized: true,
     cookie: {
