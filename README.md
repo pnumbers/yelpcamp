@@ -24,7 +24,7 @@ The app uses Node.js and Express as its backend server with MongoDB as its datab
 
 ### Frontend
 
-The front end was built with HTML, CSS, and Bootstrap. Additionally, Cloudinary was utilized for image storage and Mapbox powers its dynamic map functionality.
+The frontend was built with HTML, CSS, and Bootstrap. Additionally, Cloudinary was utilized for image storage and Mapbox powers its dynamic map functionality.
 
 ## How to Use
 
