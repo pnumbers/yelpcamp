@@ -103,7 +103,7 @@ dist
 # TernJS port file
 .tern-port
 
-#
+# Local Ignore
 uploads/
 photos/
 *.DS_Store
