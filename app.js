@@ -36,7 +36,7 @@ const { date } = require('joi');
 
 // Mongoose Connection Initialization
 // Cloud Database
-const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
 // Local Dev Database
 // const dbUrl = 'mongodb://localhost:27017/yelp-camp';
 mongoose.connect(dbUrl);
@@ -62,11 +62,13 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(mongoSanitize());
 // app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
+const secret = process.env.SECRET || 'thisshouldbeabettersecret';
+
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: 'thisshouldbeabettersecret',
+        secret,
     }
 })
 
@@ -76,7 +78,7 @@ store.on("error", function (e) {
 
 const sessionConfig = {
     name: 'session',
-    secret: 'thisshouldbeabettersecret',
+    secret,
     store,
     resave: false,
     saveUninitialized: true,
