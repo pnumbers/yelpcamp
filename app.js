@@ -62,10 +62,22 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(mongoSanitize());
 // app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret',
+    }
+})
+
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+});
+
 const sessionConfig = {
     name: 'session',
     secret: 'thisshouldbeabettersecret',
-    store: MongoStore.create({ mongoUrl: dbUrl }),
+    store,
     resave: false,
     saveUninitialized: true,
     cookie: {
